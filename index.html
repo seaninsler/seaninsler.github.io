@@ -11,10 +11,9 @@
 
     <style>
       :root {
-        --bg: #ffffff;
-        --text: #111111;
-        --muted: #555555;
-        --rule: rgba(0, 0, 0, 0.12);
+        --text: #0f172a; /* deep navy */
+        --muted: rgba(15, 23, 42, 0.7);
+        --rule: rgba(15, 23, 42, 0.15);
         --link: #1f4cff;
         --maxw: 780px;
       }
@@ -25,10 +24,10 @@
 
       body {
         margin: 0;
-        background: var(--bg);
-        color: var(--text);
         font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
-          Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+          Helvetica, Arial, sans-serif;
+        color: var(--text);
+        background: #ffffff;
         line-height: 1.65;
         -webkit-font-smoothing: antialiased;
       }
@@ -37,28 +36,55 @@
         color: var(--link);
         text-decoration: none;
       }
+
       a:hover {
         text-decoration: underline;
         text-underline-offset: 3px;
       }
 
-      .wrap {
-        max-width: var(--maxw);
-        margin: 0 auto;
-        padding: 48px 18px 80px;
+      /* ---------- HERO (LIGHT) ---------- */
+
+      .hero {
+        position: relative;
+        background-image: url("images/banner.png");
+        background-size: cover;
+        background-position: center;
+        padding: 64px 18px 88px;
       }
 
-      header {
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          rgba(255, 255, 255, 0.94) 0%,
+          rgba(255, 255, 255, 0.82) 45%,
+          rgba(255, 255, 255, 0.55) 100%
+        );
+      }
+
+      .hero-inner {
+        position: relative;
+        max-width: var(--maxw);
+        margin: 0 auto;
+      }
+
+      .hero header {
         display: flex;
         justify-content: space-between;
         align-items: baseline;
         gap: 16px;
-        margin-bottom: 42px;
+        margin-bottom: 48px;
       }
 
       .name {
-        font-size: 14px;
-        letter-spacing: 0.02em;
+        font-size: 18px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+
+      .name .title {
+        font-weight: 600;
         color: var(--muted);
       }
 
@@ -77,42 +103,26 @@
         text-decoration: none;
       }
 
-      h1 {
-        font-size: clamp(34px, 4vw, 46px);
+      .hero h1 {
+        font-size: clamp(36px, 4vw, 48px);
         line-height: 1.12;
-        letter-spacing: -0.02em;
-        margin: 0 0 14px;
+        letter-spacing: -0.03em;
+        margin: 0 0 16px;
+        font-weight: 800;
       }
 
-      .lede {
+      .hero .lede {
         font-size: 18px;
+        max-width: 62ch;
         color: var(--muted);
-        margin: 0 0 24px;
-        max-width: 65ch;
       }
 
-      /* --- IMAGE BLOCKS --- */
+      /* ---------- BODY ---------- */
 
-      .image-row {
-        margin: 34px 0;
-      }
-
-      .image-row img {
-        width: 100%;
-        height: auto;
-        border-radius: 12px;
-        display: block;
-      }
-
-      .headshot {
-        max-width: 160px;
-        border-radius: 999px;
-      }
-
-      .image-caption {
-        font-size: 13px;
-        color: var(--muted);
-        margin-top: 8px;
+      .wrap {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 56px 18px 88px;
       }
 
       .links {
@@ -120,37 +130,57 @@
         flex-wrap: wrap;
         gap: 16px;
         font-size: 14px;
-        margin-top: 20px;
+        margin-top: 28px;
       }
 
       hr {
         border: 0;
         border-top: 1px solid var(--rule);
-        margin: 42px 0;
+        margin: 48px 0;
       }
 
       h2 {
         font-size: 16px;
-        margin: 0 0 12px;
+        margin: 0 0 14px;
         letter-spacing: -0.01em;
       }
 
       ul {
-        margin: 12px 0 0;
         padding-left: 18px;
+        margin: 12px 0 0;
       }
 
       li {
         margin: 8px 0;
       }
 
+      /* ---------- IMAGES ---------- */
+
+      .image-row {
+        margin: 48px 0;
+      }
+
+      .image-row img {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        display: block;
+        filter: brightness(0.92) contrast(0.96);
+      }
+
+      .headshot {
+        max-width: 160px;
+        border-radius: 999px;
+        filter: none;
+      }
+
       .work-item {
-        margin: 0 0 22px;
+        margin-bottom: 24px;
       }
 
       .work-title {
         font-weight: 600;
-        margin: 0 0 6px;
+        margin-bottom: 6px;
       }
 
       .work-desc {
@@ -159,167 +189,142 @@
       }
 
       footer {
-        margin-top: 52px;
+        margin-top: 64px;
         font-size: 13px;
         color: var(--muted);
-      }
-
-      @media (prefers-reduced-motion: no-preference) {
-        .wrap {
-          animation: fade 260ms ease-out both;
-        }
-        @keyframes fade {
-          from {
-            opacity: 0;
-            transform: translateY(4px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
       }
     </style>
   </head>
 
   <body>
-    <div class="wrap">
-      <header>
-        <div class="name">Sean Insler · Senior Product Manager</div>
-        <nav class="nav">
-          <a href="#how">How I work</a>
-          <a href="#work">Work</a>
-          <a href="#fit">Fit</a>
-          <a href="#contact">Contact</a>
-        </nav>
-      </header>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-inner">
+        <header>
+          <div class="name">
+            Sean Insler <span class="title">· Senior Product Manager</span>
+          </div>
+          <nav class="nav">
+            <a href="#how">How I work</a>
+            <a href="#work">Work</a>
+            <a href="#fit">Fit</a>
+            <a href="#contact">Contact</a>
+          </nav>
+        </header>
 
-      <main>
         <h1>Building the systems that make products scale.</h1>
         <p class="lede">
           I’m a Senior Product Manager with 10+ years turning messy, real-world
           problems into working digital products — platforms, CMS, marketplaces,
           and regulated, high-constraint systems.
         </p>
+      </div>
+    </section>
 
-        <!-- Optional headshot -->
-        <div class="image-row">
-          <!-- Replace src with your photo or delete this block -->
-          <img
-            class="headshot"
-            src="images/headshot.jpg"
-            alt="Sean Insler"
-          />
-        </div>
+    <!-- BODY -->
+    <main class="wrap">
+      <!-- Optional headshot -->
+      <div class="image-row">
+        <img
+          class="headshot"
+          src="images/headshot.png"
+          alt="Sean Insler headshot"
+        />
+      </div>
 
-        <!-- Wide professional / abstract image -->
-        <div class="image-row">
-          <!-- Replace with a calm, professional image -->
-          <img
-            src="images/abstract-system.jpg"
-            alt="Abstract representation of systems and structure"
-          />
-          <div class="image-caption">
-            Systems-first product work: clarity, structure, and constraints.
+      <div class="links" id="contact">
+        <a href="mailto:sean.insler@gmail.com">sean.insler@gmail.com</a>
+        <a
+          href="https://www.linkedin.com/in/seaninsler/"
+          target="_blank"
+          rel="noreferrer"
+          >LinkedIn</a
+        >
+        <a
+          href="./SEAN-INSLER-web-cv.pdf"
+          target="_blank"
+          rel="noreferrer"
+          >Resume (PDF)</a
+        >
+      </div>
+
+      <hr />
+
+      <section id="how">
+        <h2>How I work</h2>
+        <ul>
+          <li>I start with the underlying system, not the UI.</li>
+          <li>I translate ambiguity into clear product shapes.</li>
+          <li>I balance strategy and execution without losing either.</li>
+          <li>I decide what not to build early.</li>
+          <li>I optimize for correctness, adoption, and longevity.</li>
+        </ul>
+      </section>
+
+      <!-- Tunnel divider -->
+      <div class="image-row">
+        <img src="images/tunnel.png" alt="Tunnel representing focus and constraints" />
+      </div>
+
+      <section id="work">
+        <h2>Selected work</h2>
+
+        <div class="work-item">
+          <div class="work-title">
+            Marsh MarketPlace — CMS & platform foundation
           </div>
-        </div>
-
-        <div class="links" id="contact">
-          <a href="mailto:sean.insler@gmail.com">sean.insler@gmail.com</a>
-          <a
-            href="https://www.linkedin.com/in/seaninsler"
-            target="_blank"
-            rel="noreferrer"
-            >LinkedIn</a
-          >
-          <a
-            href="./SEAN-INSLER-web-cv.pdf"
-            target="_blank"
-            rel="noreferrer"
-            >Resume (PDF)</a
-          >
-        </div>
-
-        <hr />
-
-        <section id="how">
-          <h2>How I work</h2>
-          <ul>
-            <li>I start with the <strong>underlying system</strong>, not the UI.</li>
-            <li>I translate ambiguity into <strong>clear product shapes</strong>.</li>
-            <li>I balance strategy and execution without losing either.</li>
-            <li>I decide <strong>what not to build</strong> early.</li>
-            <li>I optimize for correctness, adoption, and long-term viability.</li>
-          </ul>
-        </section>
-
-        <hr />
-
-        <!-- Optional second wide image -->
-        <div class="image-row">
-          <img
-            src="images/work-context.jpg"
-            alt="Professional product and systems context"
-          />
-          <div class="image-caption">
-            Platforms, marketplaces, CMS, and regulated environments.
-          </div>
-        </div>
-
-        <section id="work">
-          <h2>Selected work</h2>
-
-          <div class="work-item">
-            <div class="work-title">
-              Marsh MarketPlace — CMS & platform foundation
-            </div>
-            <p class="work-desc">
-              Built a CMS-centric platform from scratch to support complex
-              content, workflows, and integrations under enterprise constraints.
-            </p>
-          </div>
-
-          <div class="work-item">
-            <div class="work-title">
-              Advertease — regulated digital ecosystems
-            </div>
-            <p class="work-desc">
-              Led product strategy across high-risk platforms involving identity,
-              compliance, payments, and monetization.
-            </p>
-          </div>
-
-          <div class="work-item">
-            <div class="work-title">
-              The Zach Project — education & outreach platform
-            </div>
-            <p class="work-desc">
-              Built and evolved a public-facing platform for education, outreach,
-              and storytelling with non-technical stakeholders.
-            </p>
-          </div>
-        </section>
-
-        <hr />
-
-        <section id="fit">
-          <h2>What I’m looking for</h2>
           <p class="work-desc">
-            Systems-heavy products, ambiguous problem spaces, and teams that
-            value clarity over noise.
+            Built a CMS-centric platform from scratch supporting complex content,
+            workflows, and integrations under enterprise constraints.
           </p>
-          <ul>
-            <li>Platform, CMS, and marketplace products</li>
-            <li>Real constraints: compliance, payments, scale</li>
-            <li>Calm, thoughtful teams</li>
-          </ul>
-        </section>
+        </div>
 
-        <footer>
-          <span id="year"></span> · Built for clarity, not clicks.
-        </footer>
-      </main>
-    </div>
+        <div class="work-item">
+          <div class="work-title">
+            Advertease — regulated digital ecosystems
+          </div>
+          <p class="work-desc">
+            Led product strategy across high-risk platforms involving identity,
+            compliance, payments, and monetization.
+          </p>
+        </div>
+
+        <div class="work-item">
+          <div class="work-title">
+            The Zach Project — education & outreach platform
+          </div>
+          <p class="work-desc">
+            Built and evolved a public-facing platform translating mission into
+            usable, trusted systems.
+          </p>
+        </div>
+      </section>
+
+      <!-- Systems detail image -->
+      <div class="image-row">
+        <img
+          src="images/systems-detail.png"
+          alt="Abstract structural detail representing systems and scale"
+        />
+      </div>
+
+      <section id="fit">
+        <h2>What I’m looking for</h2>
+        <p class="work-desc">
+          Systems-heavy products, ambiguous problem spaces, and teams that value
+          clarity over noise.
+        </p>
+        <ul>
+          <li>Platform, CMS, and marketplace products</li>
+          <li>Real constraints: compliance, payments, scale</li>
+          <li>Calm, thoughtful teams</li>
+        </ul>
+      </section>
+
+      <footer>
+        © <span id="year"></span> · Built for clarity, not clicks.
+      </footer>
+    </main>
 
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
