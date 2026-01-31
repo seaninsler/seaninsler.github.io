@@ -6,10 +6,15 @@
     <title>Sean Insler — Senior Product Manager</title>
     <meta
       name="description"
-      content="Senior Product Manager specializing in payments, fintech, B2B platforms, and regulated industries."
+      content="Senior Product Manager who builds user-first products that work in complex environments — enterprise platforms, services-led startups, and AI-enabled delivery."
     />
     <meta property="og:title" content="Sean Insler — Senior Product Manager" />
-    <meta property="og:description" content="10+ years building products across payments, fintech, B2B platforms, and regulated industries" />
+    <meta
+      property="og:description"
+      content="I build user-first products that work in complex environments."
+    />
+    <meta property="og:type" content="website" />
+	<link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
 
     <style>
       :root {
@@ -35,6 +40,62 @@
       a { color: var(--link); text-decoration: none; transition: opacity 0.2s; }
       a:hover { text-decoration: underline; text-underline-offset: 4px; }
 
+      .wrap {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 48px 24px 64px;
+      }
+
+      h1, h2 {
+        line-height: 1.15;
+        margin: 0 0 14px;
+        letter-spacing: -0.02em;
+      }
+
+      h1 { font-size: clamp(34px, 4vw, 46px); }
+      h2 { font-size: 22px; margin-top: 0; }
+
+      p { margin: 0 0 14px; color: var(--muted); }
+      .lede { font-size: 1.07rem; color: rgba(15, 23, 42, 0.78); max-width: 62ch; }
+
+      .rule { height: 1px; background: var(--rule); margin: 36px 0; }
+
+      /* ---------- HERO CTAs ---------- */
+      .cta-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 18px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(15, 23, 42, 0.18);
+        background: rgba(255, 255, 255, 0.72);
+        color: var(--text);
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .btn:hover {
+        text-decoration: none;
+        border-color: rgba(15, 23, 42, 0.32);
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      /* ---------- FOOTER ---------- */
+      .footer {
+        border-top: 1px solid var(--rule);
+        padding: 24px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
       /* ---------- HERO ---------- */
       .hero {
         position: relative;
@@ -51,129 +112,94 @@
         inset: 0;
         background: linear-gradient(
           rgba(255, 255, 255, 0.96) 0%,
-          rgba(255, 255, 255, 0.85) 60%,
-          rgba(255, 255, 255, 0.6) 100%
+          rgba(255, 255, 255, 0.85) 45%,
+          rgba(255, 255, 255, 0.80) 100%
         );
       }
 
-      .hero-inner { position: relative; max-width: var(--maxw); margin: 0 auto; }
+      .hero-inner {
+        position: relative;
+        max-width: var(--maxw);
+        margin: 0 auto;
+      }
 
       header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 64px;
+        gap: 16px;
+        margin-bottom: 28px;
       }
 
-      .name { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.02em; }
-      .name .title { font-weight: 500; color: var(--muted); margin-left: 4px; }
+      .name { font-weight: 800; font-size: 18px; }
+      .title { font-weight: 600; color: var(--muted); }
 
-      .nav { display: flex; gap: 20px; font-size: 14px; font-weight: 500; }
-      .nav a { color: var(--muted); }
-      .nav a:hover { color: var(--text); text-decoration: none; }
-
-      h1 {
-        font-size: clamp(36px, 6vw, 58px);
-        line-height: 1.1;
-        letter-spacing: -0.04em;
-        margin: 0 0 32px;
-        font-weight: 800;
-        color: #000;
-      }
-
-      .lede {
-        font-size: 20px;
-        max-width: 65ch;
-        color: var(--muted);
-        line-height: 1.5;
-      }
-
-      /* ---------- CONTENT STRUCTURE ---------- */
-      .wrap { max-width: var(--maxw); margin: 0 auto; padding: 60px 24px 100px; }
-
-      section { margin-bottom: 80px; }
-      
-      h2 {
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--muted);
-        margin-bottom: 32px;
+      .nav {
         display: flex;
-        align-items: center;
-        gap: 12px;
+        gap: 14px;
+        font-weight: 600;
+        flex-wrap: wrap;
       }
-      
-      h2::after { content: ""; height: 1px; background: var(--rule); flex-grow: 1; }
 
-      /* ---------- HOW I WORK / CORE ---------- */
+      /* ---------- SECTIONS ---------- */
+      section { scroll-margin-top: 72px; }
+
       .grid-list {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 32px;
-        list-style: none;
-        padding: 0;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px 18px;
+        padding-left: 18px;
+        margin: 0;
       }
 
-      .grid-list li {
-        position: relative;
-        padding-left: 32px;
-        font-weight: 600;
-        line-height: 1.7;
+      .grid-list li { color: rgba(15, 23, 42, 0.78); }
+
+      .work-item {
+        border: 1px solid rgba(15, 23, 42, 0.12);
+        border-radius: 14px;
+        padding: 18px 18px 16px;
+        margin: 14px 0;
+        background: #ffffff;
       }
 
-      .grid-list li::before {
-        content: "→";
-        position: absolute;
-        left: 0;
-        color: var(--link);
+      .work-title {
+        font-weight: 800;
+        margin-bottom: 6px;
+        letter-spacing: -0.01em;
       }
 
-      .tech-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 12px;
-      }
+      .work-desc { margin: 0 0 10px; }
 
-      .tag {
-        background: var(--accent-bg);
-        padding: 4px 10px;
-        border-radius: 4px;
-        font-size: 12px;
-        font-weight: 600;
-        border: 1px solid var(--rule);
-      }
-
-      /* ---------- WORK ITEMS ---------- */
-      .work-item { margin-bottom: 48px; }
-      .work-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-      .work-desc { color: var(--muted); margin-bottom: 12px; max-width: 70ch; }
       .work-metric {
-        font-size: 14px;
-        font-weight: 600;
-        color: var(--text);
+        font-size: 0.95rem;
+        color: rgba(15, 23, 42, 0.70);
+        padding-top: 10px;
+        border-top: 1px dashed rgba(15, 23, 42, 0.18);
+      }
+
+      /* ---------- CONTACT ---------- */
+      .contact-card {
         display: flex;
+        gap: 18px;
         align-items: center;
-        gap: 6px;
+        padding: 18px;
+        border-radius: 14px;
+        border: 1px solid rgba(15, 23, 42, 0.12);
+        background: var(--accent-bg);
       }
 
-      .image-row { margin: 64px 0; }
-      .image-row img { width: 100%; height: auto; border-radius: 8px; display: block; }
-      .headshot { max-width: 120px; border-radius: 50%; margin-bottom: 24px; }
-
-      footer {
-        padding-top: 40px;
-        border-top: 1px solid var(--rule);
-        font-size: 13px;
-        color: var(--muted);
-        display: flex;
-        justify-content: space-between;
+      .headshot {
+        width: 78px;
+        height: 78px;
+        border-radius: 14px;
+        object-fit: cover;
+        background: rgba(15, 23, 42, 0.08);
       }
 
-      @media (max-width: 640px) {
-        header { flex-direction: column; align-items: flex-start; gap: 16px; }
-        .nav { width: 100%; justify-content: space-between; }
+      @media (max-width: 720px) {
+        header { flex-direction: column; align-items: flex-start; }
+        .grid-list { grid-template-columns: 1fr; }
+        .contact-card { flex-direction: column; align-items: flex-start; }
       }
     </style>
   </head>
@@ -192,89 +218,94 @@
 
         <h1>I build user-first products that work in complex environments.</h1>
         <p class="lede">
-          10+ years shipping across payments, fintech, B2B platforms, and enterprise systems. 
-          I translate technical constraints and regulatory requirements into products people actually use.
+          10+ years shipping across enterprise platforms, services-led startups, and regulated domains.
+          I translate technical constraints and policy requirements into systems people actually use.
         </p>
+
+        <div class="cta-row">
+          <a class="btn" href="mailto:sean.insler@gmail.com">Email</a>
+          <a class="btn" href="https://www.linkedin.com/in/seaninsler/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a class="btn" href="./SEAN-INSLER-web-cv.pdf" target="_blank" rel="noopener noreferrer">Resume (PDF)</a>
+        </div>
       </div>
     </section>
 
     <main class="wrap">
-      <section id="contact">
-        <img class="headshot" src="images/headshot.png" alt="Sean Insler" />
-        <div style="display: flex; gap: 24px; font-weight: 600;">
-          <a href="mailto:sean.insler@gmail.com">Email</a>
-          <a href="https://www.linkedin.com/in/seaninsler/" target="_blank">LinkedIn</a>
-          <a href="./SEAN-INSLER-web-cv.pdf" target="_blank">Resume (PDF)</a>
-        </div>
-      </section>
-
       <section id="approach">
         <h2>How I Work</h2>
         <ul class="grid-list">
-          <li><strong>0→1 Product Delivery:</strong> I ship new products in resource-constrained environments, from pre-seed startups to enterprise.</li>
-          <li><strong>Regulatory Navigation:</strong> Expert in building for payments, fintech, and high-compliance contexts where failure isn't an option.</li>
-          <li><strong>Cross-Functional Leadership:</strong> I align engineering, operations, compliance, and business stakeholders around shared outcomes.</li>
-          <li><strong>Systems Thinking:</strong> I design for scale—whether it's global marketplaces or white-label platforms.</li>
+          <li><strong>0→1 Product Delivery:</strong> I ship new products in resource-constrained environments, from problem framing to launch.</li>
+          <li><strong>Systems Thinking:</strong> I look for the underlying mechanics—data, workflows, governance, integrations—so products hold up under real usage.</li>
+          <li><strong>Stakeholder Translation:</strong> I reconcile conflicting priorities and turn ambiguity into clear decisions teams can execute.</li>
+          <li><strong>Risk & Compliance Awareness:</strong> I build with operational constraints in mind (policy, governance, auditability, and reliability).</li>
+          <li><strong>Pragmatic Strategy:</strong> I define roadmaps that match reality—constraints, adoption, and what can actually ship.</li>
+          <li><strong>AI-Enabled Execution:</strong> I use AI to speed up synthesis, spec writing, and backlog refinement—without outsourcing judgment.</li>
         </ul>
-
-        <div class="tech-tags" style="margin-top: 40px;">
-          <span class="tag">Payments & Fintech</span>
-          <span class="tag">B2B Platforms</span>
-          <span class="tag">Enterprise SaaS</span>
-          <span class="tag">Regulated Industries</span>
-          <span class="tag">API Integrations</span>
-          <span class="tag">Agile/Scrum</span>
-        </div>
       </section>
 
-      <div class="image-row">
-        <img src="images/tunnel.png" alt="Focus and constraints" />
-      </div>
+      <div class="rule"></div>
 
       <section id="work">
         <h2>Selected Work</h2>
 
         <div class="work-item">
-          <div class="work-title">Advertease — Complex Multi-Product Suite</div>
+          <div class="work-title">Advertease — Services-Led Platform Delivery (Pre-PMF)</div>
           <p class="work-desc">
-            Led product delivery for pre-seed hospitality tech startup. Executed end-to-end build of custom 4-product suite 
-            (payments, loyalty, access control) for high-volume operator managing 30+ venues. Managed 6-person cross-functional team 
-            partnering with 3-person engineering in resource-constrained environment.
+            Led product strategy and hands-on delivery for a services-led hospitality tech startup. Shipped production software across
+            30–35 live venue locations, including venue websites, POS-to-web integrations, membership experiences, and a creator content platform.
+            Balanced custom client delivery with reusable platform foundations while operating under runway, compliance, and shifting commercial constraints.
           </p>
-          <div class="work-metric">Impact: Shipped mobile applications across 30+ distinct locations with operational reliability in high-traffic environments.</div>
+          <div class="work-metric">Impact: Deployed core experiences across 30–35 locations and standardized reusable components that improved speed-to-launch for new venues.</div>
         </div>
 
         <div class="work-item">
-          <div class="work-title">Marsh & McLennan — Industry-First Global Marketplace</div>
+          <div class="work-title">Marsh &amp; McLennan — Industry-First Global Marketplace</div>
           <p class="work-desc">
-            Conceptualized and championed industry-first two-sided global marketplace serving 70+ enterprise insurance clients. 
-            Secured executive buy-in, owned full product lifecycle from discovery through launch. Partnered with leadership across 
+            Conceptualized and championed an industry-first two-sided global marketplace supporting 170+ global enterprise insurance clients.
+            Secured executive buy-in, owned full product lifecycle from discovery through launch. Partnered with leadership across
             20+ global markets to translate strategic goals into product requirements.
           </p>
-          <div class="work-metric">Impact: Built largest active internal user base of any application across Marsh & McLennan Companies; supported 70+ North American clients directly.</div>
+          <div class="work-metric">Impact: Built the largest active internal user base of any application across Marsh &amp; McLennan Companies and supported 70+ North American clients directly.</div>
         </div>
 
         <div class="work-item">
-          <div class="work-title">Marsh & McLennan — Agile Transformation Pioneer</div>
+          <div class="work-title">Marsh &amp; McLennan — Agile Transformation Pioneer</div>
           <p class="work-desc">
-            Led company's first fully internal application development effort using agile methodology. Navigated global change governance 
-            and compliance requirements while maintaining fast-paced cross-functional delivery. Designed improved global data hierarchy 
-            for insurance products and contributed to patent-pending recommendation engine.
+            Led the company’s first fully internal application development effort using agile methodology. Navigated global change governance
+            and compliance requirements while maintaining fast-paced cross-functional delivery. Designed improved global data hierarchy
+            for insurance products and contributed to a patent-pending recommendation engine.
           </p>
-          <div class="work-metric">Impact: Pioneered agile adoption that became template for future internal development.</div>
+          <div class="work-metric">Impact: Pioneered agile adoption that became the template for future internal development.</div>
         </div>
 
       </section>
 
-      <footer>
-        <div>© <span id="year"></span> · Sean Insler</div>
-        <div>Built for clarity, not clicks.</div>
-      </footer>
+      <div class="rule"></div>
+
+      <section id="contact">
+        <div class="contact-card">
+          <img class="headshot" src="images/headshot.png" alt="Sean Insler" />
+          <div>
+            <div style="display: flex; gap: 24px; font-weight: 700; flex-wrap: wrap;">
+              <a href="mailto:sean.insler@gmail.com">Email</a>
+              <a href="https://www.linkedin.com/in/seaninsler/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="./SEAN-INSLER-web-cv.pdf" target="_blank" rel="noopener noreferrer">Resume (PDF)</a>
+            </div>
+            <p style="margin-top: 10px;">
+              Based in Hackensack, NJ · Open to remote roles (USA)
+            </p>
+          </div>
+        </div>
+      </section>
+
     </main>
+
+    <footer class="footer">
+      <div>© <span id="year"></span> Sean Insler</div>
+    </footer>
 
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
     </script>
   </body>
 </html>
-
