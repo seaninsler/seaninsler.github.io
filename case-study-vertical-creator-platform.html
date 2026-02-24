@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Case Study — De-Risking a Vertical Creator Platform</title>
+    <meta
+      name="description"
+      content="How I de-risked and shipped a verticalized creator monetization platform for a 35-venue operator under existential startup pressure."
+    />
+    <meta property="og:title" content="Case Study — De-Risking a Vertical Creator Platform" />
+    <meta
+      property="og:description"
+      content="Structured alpha testing, UX simplification, and product refocus under high stakes."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+
+    <style>
+      :root {
+        --text: #0f172a;
+        --muted: rgba(15, 23, 42, 0.7);
+        --rule: rgba(15, 23, 42, 0.15);
+        --link: #1f4cff;
+        --maxw: 850px;
+        --accent-bg: #f8fafc;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Helvetica, Arial, sans-serif;
+        color: var(--text);
+        background: #ffffff;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a { color: var(--link); text-decoration: none; }
+      a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+      .hero {
+        position: relative;
+        background-image: url("images/banner.png");
+        background-size: cover;
+        background-position: center;
+        padding: 64px 24px;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          rgba(255, 255, 255, 0.96) 0%,
+          rgba(255, 255, 255, 0.88) 45%,
+          rgba(255, 255, 255, 0.84) 100%
+        );
+      }
+
+      .hero-inner {
+        position: relative;
+        max-width: var(--maxw);
+        margin: 0 auto;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+      }
+
+      .name { font-weight: 800; font-size: 18px; }
+      .title { font-weight: 600; color: var(--muted); }
+
+      .nav {
+        display: flex;
+        gap: 14px;
+        font-weight: 600;
+        flex-wrap: wrap;
+      }
+
+      h1, h2, h3 {
+        line-height: 1.15;
+        margin: 0 0 14px;
+        letter-spacing: -0.02em;
+      }
+
+      h1 { font-size: clamp(30px, 4vw, 44px); }
+      h2 { font-size: 22px; }
+
+      p { margin: 0 0 14px; color: var(--muted); }
+
+      .lede {
+        font-size: 1.07rem;
+        color: rgba(15, 23, 42, 0.78);
+        max-width: 70ch;
+      }
+
+      .wrap {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 40px 24px 64px;
+      }
+
+      .rule { height: 1px; background: var(--rule); margin: 34px 0; }
+
+      .meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .pill {
+        border: 1px solid rgba(15, 23, 42, 0.12);
+        border-radius: 14px;
+        padding: 10px 12px;
+        background: rgba(255, 255, 255, 0.75);
+      }
+
+      .pill .k {
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .pill .v {
+        font-weight: 800;
+        color: rgba(15, 23, 42, 0.9);
+      }
+
+      .card {
+        border: 1px solid rgba(15, 23, 42, 0.12);
+        border-radius: 14px;
+        padding: 18px;
+        background: #ffffff;
+      }
+
+      ul {
+        margin: 10px 0 0 18px;
+        padding: 0;
+      }
+
+      li { margin: 6px 0; color: rgba(15, 23, 42, 0.78); }
+
+      .footer {
+        border-top: 1px solid var(--rule);
+        padding: 24px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      @media (max-width: 860px) {
+        .meta { grid-template-columns: 1fr 1fr; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <section class="hero">
+      <div class="hero-inner">
+        <header>
+          <div class="name">Sean Insler <span class="title">· Case Study</span></div>
+          <nav class="nav">
+            <a href="./index.html">Home</a>
+            <a href="#context">Context</a>
+            <a href="#challenge">Challenge</a>
+            <a href="#approach">Approach</a>
+            <a href="#outcome">Outcome</a>
+          </nav>
+        </header>
+
+        <h1>De-Risking a Vertical Creator Platform Under Existential Pressure</h1>
+        <p class="lede">
+          How I refocused and shipped a club-native content monetization platform for a 35-venue operator,
+          using structured alpha testing and UX simplification to reduce marketplace risk.
+        </p>
+
+        <div class="meta">
+          <div class="pill"><span class="k">Role</span><span class="v">Senior Product Manager</span></div>
+          <div class="pill"><span class="k">Team</span><span class="v">4 CS/Ops/QA · Eng Team</span></div>
+          <div class="pill"><span class="k">Client</span><span class="v">35-Venue Operator</span></div>
+          <div class="pill"><span class="k">Goal</span><span class="v">Ship or Fold</span></div>
+        </div>
+      </div>
+    </section>
+
+<main class="wrap">
+
+  <section id="context">
+    <h2>Context</h2>
+    <div class="card">
+      <p>
+        Advertease was attempting to pivot from marketing services into a product-led SaaS company.
+        The cornerstone of that pivot was a verticalized content monetization platform designed for nightclub
+        performers and venue operators.
+      </p>
+
+      <p>
+        A 35-location venue operator was waiting for delivery. If we failed to ship something viable,
+        the company’s runway was in serious jeopardy.
+      </p>
+
+      <p>
+        The platform was roughly 75% built when I joined. Features existed. Payments technically worked.
+        But the system did not behave coherently. Navigation was fragmented, content types were duplicative,
+        and creator workflows were overloaded with choices.
+      </p>
+
+      <p>
+        The risk was not technical failure. The risk was behavioral failure.
+      </p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <section id="challenge">
+    <h2>The Core Problem</h2>
+    <div class="card">
+      <p>
+        Leadership knew what the product was meant to be: a club-native alternative to OnlyFans,
+        adult-friendly but not exclusively pornographic, capable of supporting performers, DJs,
+        staff, and venues within a unified ecosystem.
+      </p>
+
+      <p>
+        What we did not know was whether creators would actually use it in a sustained way.
+      </p>
+
+      <ul>
+        <li>Would creators complete onboarding and meaningfully build profiles?</li>
+        <li>Would they seed enough content to create fan value?</li>
+        <li>Would the complexity discourage less experienced creators?</li>
+        <li>Would overlapping content types fragment both publishing and discovery?</li>
+      </ul>
+
+      <p>
+        Shipping without answering those questions would have satisfied a delivery milestone
+        while leaving the marketplace structurally weak.
+      </p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <section id="approach">
+    <h2>Intervention</h2>
+    <div class="card">
+
+      <h3>1. Reframing Beta as Risk Management</h3>
+      <p>
+        The client required a beta before sign-off. I proposed running an internal alpha first,
+        not as a feature test, but as a structured behavioral stress test.
+      </p>
+
+      <p>
+        The goal was to expose creator friction before the client’s staff encountered it —
+        and to use real test content to seed the eventual beta environment.
+      </p>
+
+      <h3>2. Structured Real-World Validation</h3>
+      <p>
+        I organized ~20 creators into structured testing cohorts led by four internal team members.
+        We created detailed scripts, required written reports, and held recurring feedback sessions.
+      </p>
+
+      <p>
+        As testing progressed, we intentionally reduced instructional specificity to measure
+        whether workflows were becoming intuitive rather than dependent on guidance.
+      </p>
+
+      <h3>3. Collapsing Product Complexity</h3>
+      <p>
+        The alpha surfaced a consistent pattern: too many content types created confusion
+        and duplicated surfaces for both creators and fans.
+      </p>
+
+      <p>
+        I made the decision to collapse all media formats into a unified “Post” model capable of
+        supporting video, image, text, and polls.
+      </p>
+
+      <ul>
+        <li>Reduced creator cognitive load</li>
+        <li>Unified fan discovery into a single feed</li>
+        <li>Enabled future search and recommendation logic</li>
+        <li>Reduced long-term technical surface area</li>
+      </ul>
+
+      <h3>4. Designing for Activation, Not Feature Parity</h3>
+      <p>
+        We streamlined profile completion and publishing flows,
+        removing unnecessary branching and limiting choice overload.
+      </p>
+
+      <p>
+        Interestingly, experienced and novice creators converged toward similar behavior
+        once friction was reduced. The constraint was not sophistication — it was system complexity.
+      </p>
+
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <section id="outcome">
+    <h2>Outcome</h2>
+    <div class="card">
+      <p>
+        The client formally accepted the delivered platform.
+      </p>
+
+      <p>
+        The company stabilized and continued operating for an additional two years,
+        iterating on the product and pursuing additional clients.
+      </p>
+
+      <p>
+        The client ultimately chose not to launch publicly and disengaged after delivery —
+        a distribution risk we knowingly accepted in exchange for survival.
+      </p>
+
+      <h3>What This Project Taught Me</h3>
+      <p>
+        In vertical marketplaces, product risk often hides in behavior, not infrastructure.
+        Payments can work. Features can exist. But if workflows require too much cognitive effort,
+        activation collapses.
+      </p>
+
+      <p>
+        Simplification is not cosmetic. It is structural.
+      </p>
+
+      <p>
+        This project reinforced that under existential pressure, the most senior product decision
+        is often deciding what to remove — and validating that decision before the client discovers the flaw.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+    <footer class="footer">
+      <div>© <span id="year"></span> Sean Insler</div>
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>

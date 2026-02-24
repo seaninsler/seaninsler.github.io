@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Case Study — Enterprise Marketplace & Recommendation Engine</title>
+    <meta
+      name="description"
+      content="How I secured funding, navigated governance, and drove adoption of an industry-first marketplace and recommendation engine inside a Fortune 500 enterprise."
+    />
+    <meta property="og:title" content="Case Study — Enterprise Marketplace & Recommendation Engine" />
+    <meta
+      property="og:description"
+      content="Turning static collateral into broker decision-support: funding, governance, data architecture, and adoption."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+
+    <style>
+      :root {
+        --text: #0f172a;
+        --muted: rgba(15, 23, 42, 0.7);
+        --rule: rgba(15, 23, 42, 0.15);
+        --link: #1f4cff;
+        --maxw: 850px;
+        --accent-bg: #f8fafc;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Helvetica, Arial, sans-serif;
+        color: var(--text);
+        background: #ffffff;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a { color: var(--link); text-decoration: none; transition: opacity 0.2s; }
+      a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+      /* ---------- HERO (matches your site) ---------- */
+      .hero {
+        position: relative;
+        background-image: url("images/banner.png");
+        background-size: cover;
+        background-position: center;
+        padding: 64px 24px 72px;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          rgba(255, 255, 255, 0.96) 0%,
+          rgba(255, 255, 255, 0.88) 45%,
+          rgba(255, 255, 255, 0.84) 100%
+        );
+      }
+
+      .hero-inner {
+        position: relative;
+        max-width: var(--maxw);
+        margin: 0 auto;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+      }
+
+      .name { font-weight: 800; font-size: 18px; }
+      .title { font-weight: 600; color: var(--muted); }
+
+      .nav {
+        display: flex;
+        gap: 14px;
+        font-weight: 600;
+        flex-wrap: wrap;
+      }
+
+      h1, h2, h3 {
+        line-height: 1.15;
+        margin: 0 0 14px;
+        letter-spacing: -0.02em;
+      }
+
+      h1 { font-size: clamp(30px, 4vw, 44px); }
+      h2 { font-size: 22px; margin-top: 0; }
+      h3 { font-size: 16px; margin: 0 0 8px; letter-spacing: -0.01em; }
+
+      p { margin: 0 0 14px; color: var(--muted); }
+
+      .lede {
+        font-size: 1.07rem;
+        color: rgba(15, 23, 42, 0.78);
+        max-width: 72ch;
+      }
+
+      /* ---------- PAGE ---------- */
+      .wrap {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 40px 24px 64px;
+      }
+
+      section { scroll-margin-top: 72px; }
+
+      .rule { height: 1px; background: var(--rule); margin: 34px 0; }
+
+      .meta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .pill {
+        border: 1px solid rgba(15, 23, 42, 0.12);
+        border-radius: 14px;
+        padding: 10px 12px;
+        background: rgba(255, 255, 255, 0.75);
+      }
+
+      .pill .k {
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+
+      .pill .v {
+        display: block;
+        margin-top: 3px;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        color: rgba(15, 23, 42, 0.9);
+      }
+
+      .card {
+        border: 1px solid rgba(15, 23, 42, 0.12);
+        border-radius: 14px;
+        padding: 18px;
+        background: #ffffff;
+      }
+
+      ul {
+        margin: 10px 0 0 18px;
+        padding: 0;
+      }
+
+      li { margin: 6px 0; color: rgba(15, 23, 42, 0.78); }
+
+      .callout {
+        border: 1px solid rgba(15, 23, 42, 0.12);
+        border-radius: 14px;
+        padding: 16px;
+        background: var(--accent-bg);
+        color: rgba(15, 23, 42, 0.82);
+      }
+
+      .callout strong { color: rgba(15, 23, 42, 0.92); }
+
+      .footer {
+        border-top: 1px solid var(--rule);
+        padding: 24px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      @media (max-width: 860px) {
+        .meta { grid-template-columns: 1fr 1fr; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <section class="hero">
+      <div class="hero-inner">
+        <header>
+          <div class="name">Sean Insler <span class="title">· Case Study</span></div>
+          <nav class="nav">
+            <a href="./index.html">Home</a>
+            <a href="#context">Context</a>
+            <a href="#problem">Problem</a>
+            <a href="#inflection">Inflection</a>
+            <a href="#execution">Execution</a>
+            <a href="#adoption">Adoption</a>
+            <a href="#reflection">Reflection</a>
+          </nav>
+        </header>
+
+        <h1>Enterprise Marketplace & Recommendation Engine</h1>
+        <p class="lede">
+          How I converted a low-adoption collateral portal into a broker decision-support system,
+          secured enterprise funding, navigated governance, and drove sustained internal adoption
+          in a Fortune 500 environment.
+        </p>
+
+        <div class="meta">
+          <div class="pill"><span class="k">Role</span><span class="v">Product Manager</span></div>
+          <div class="pill"><span class="k">Environment</span><span class="v">Fortune 500 · Regulated</span></div>
+          <div class="pill"><span class="k">Starting Point</span><span class="v">Portal w/ No Adoption</span></div>
+          <div class="pill"><span class="k">End State</span><span class="v">Decision Support · High Adoption</span></div>
+        </div>
+      </div>
+    </section>
+
+    <main class="wrap">
+      <section id="context">
+        <h2>Context</h2>
+        <div class="card">
+          <p>
+            Marsh is a global commercial insurance brokerage. The business unit I supported operated in a
+            highly regulated reverse-flow consulting model, created after legacy insurer “kickback” structures
+            were made illegal. Insurers now paid Marsh for legitimate consulting services and expected
+            demonstrable value in return.
+          </p>
+
+          <p>
+            A basic DotNetNuke portal existed where insurers could upload marketing materials for brokers.
+            It functioned, but it wasn’t part of any broker workflow and it had effectively no adoption.
+          </p>
+
+          <div class="callout" style="margin-top: 14px;">
+            <strong>The real job:</strong> create measurable insurer value by influencing broker behavior inside a system
+            where brokers had no natural incentive to change.
+          </div>
+        </div>
+      </section>
+
+      <div class="rule"></div>
+
+      <section id="problem">
+        <h2>The Structural Problem</h2>
+        <div class="card">
+          <p>
+            Brokers did not need a document repository. They needed faster, defensible decisions when advising clients.
+            Meanwhile, Marsh possessed extensive historical placement data across complex policy dimensions — data that
+            could be used to inform which insurer best fit a given client risk profile.
+          </p>
+
+          <p>
+            The opportunity was not to “improve the portal.” The opportunity was to convert static collateral into a
+            data-informed decision-support system that reduced guesswork and made it easier for brokers to position
+            insurer options in client conversations.
+          </p>
+
+          <ul>
+            <li>Brokers guessed which insurers to approach, one by one.</li>
+            <li>Insurers struggled to see measurable value from consulting contracts.</li>
+            <li>The existing portal was disconnected from broker workflow and incentive.</li>
+            <li>The organization built software via external vendors and waterfall governance.</li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="rule"></div>
+
+      <section id="inflection">
+        <h2>The Inflection Point</h2>
+        <div class="card">
+          <p>
+            Leadership had a conceptual vision: use historical placement data to guide broker-to-insurer matching.
+            What didn’t exist was a product strategy, a delivery model, or funding commitment that could turn that
+            concept into a platform.
+          </p>
+
+          <p>
+            My first major challenge was translating that vision into a fundable enterprise initiative.
+          </p>
+
+          <h3>Executive framing that unlocked commitment</h3>
+          <ul>
+            <li>Established insurer confidence that the tool would create tangible placement value.</li>
+            <li>
+              Reassured internal governance that even partial broker traction would still help demonstrate short-term
+              value to insurers.
+            </li>
+            <li>Positioned the platform as an industry-first advantage over major competitors.</li>
+            <li>Anchored feasibility in an existing insurer-facing data tool that could be translated to a broker POV.</li>
+          </ul>
+
+          <p style="margin-bottom: 0;">
+            The result was commitment to a large-scale build in an organization that historically did not build product
+            internally.
+          </p>
+        </div>
+      </section>
+
+      <div class="rule"></div>
+
+      <section id="execution">
+        <h2>Execution Under Constraint</h2>
+        <div class="card">
+          <p>
+            At the time, most internal software was delivered by third-party consultancies using waterfall-style
+            requirements and rigorous project governance. We had to decide whether to follow that mold or introduce a
+            more iterative delivery approach.
+          </p>
+
+          <p>
+            We partnered with Oliver Wyman’s emerging software practice as a hybrid internal-external bridge that the
+            enterprise could understand, and gradually introduced agile patterns over time — without triggering
+            governance rejection.
+          </p>
+
+          <h3>Structural product decisions</h3>
+          <ul>
+            <li>Redesigned the data hierarchy and classification model to support recommendation logic.</li>
+            <li>Translated insurer-facing analytics into broker-facing workflows and language.</li>
+            <li>Built a recommendation engine that reduced manual guessing and one-off outreach.</li>
+            <li>Integrated marketing content and contact pathways into the same decision surface.</li>
+            <li>Supported proof-of-value reporting back to insurers (without relying on vanity metrics).</li>
+          </ul>
+
+          <p style="margin-bottom: 0;">
+            This was not a UI redesign. It was a shift in how value flowed through the organization.
+          </p>
+        </div>
+      </section>
+
+      <div class="rule"></div>
+
+      <section id="adoption">
+        <h2>Adoption: The Real Test</h2>
+        <div class="card">
+          <p>
+            Adoption moved when the product reduced cognitive effort for brokers. It became valuable when it made a
+            difficult task simpler: describing a client to the system and receiving structured insurer suggestions
+            informed by real placement history.
+          </p>
+
+          <p>
+            Brokers used it because it saved them legwork and helped them communicate insurer fit more confidently in
+            client conversations — not because anyone mandated it.
+          </p>
+
+          <p style="margin-bottom: 0;">
+            Over time, it became the largest active internal user base of any application within the company.
+          </p>
+        </div>
+      </section>
+
+      <div class="rule"></div>
+
+      <section id="reflection">
+        <h2>What This Taught Me</h2>
+        <div class="card">
+          <p>
+            Enterprise product leadership is rarely about feature delivery. It’s about incentive alignment under
+            constraints: regulatory history, governance skepticism, vendor delivery models, global stakeholder
+            complexity, and adoption resistance.
+          </p>
+
+          <p>
+            The breakthrough was not simply building software. It was translating abstract consulting value into a
+            decision-support system that brokers voluntarily adopted — making insurer value visible and defensible
+            inside a system that otherwise would not change.
+          </p>
+
+          <p style="margin-bottom: 0;">
+            In large organizations, adoption is earned by reducing cognitive and political friction — not by launching
+            new portals.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>© <span id="year"></span> Sean Insler</div>
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>

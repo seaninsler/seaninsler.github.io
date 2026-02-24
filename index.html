@@ -14,7 +14,7 @@
       content="I build user-first products that work in complex environments."
     />
     <meta property="og:type" content="website" />
-	<link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
 
     <style>
       :root {
@@ -85,15 +85,6 @@
         text-decoration: none;
         border-color: rgba(15, 23, 42, 0.32);
         background: rgba(255, 255, 255, 0.9);
-      }
-
-      /* ---------- FOOTER ---------- */
-      .footer {
-        border-top: 1px solid var(--rule);
-        padding: 24px;
-        text-align: center;
-        color: var(--muted);
-        font-size: 0.95rem;
       }
 
       /* ---------- HERO ---------- */
@@ -177,6 +168,14 @@
         border-top: 1px dashed rgba(15, 23, 42, 0.18);
       }
 
+      /* --- Case study link styling --- */
+      .case-link {
+        display: inline-block;
+        margin-top: 8px;
+        font-weight: 700;
+        font-size: 0.95rem;
+      }
+
       /* ---------- CONTACT ---------- */
       .contact-card {
         display: flex;
@@ -188,12 +187,12 @@
         background: var(--accent-bg);
       }
 
-      .headshot {
-        width: 78px;
-        height: 78px;
-        border-radius: 14px;
-        object-fit: cover;
-        background: rgba(15, 23, 42, 0.08);
+      .footer {
+        border-top: 1px solid var(--rule);
+        padding: 24px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.95rem;
       }
 
       @media (max-width: 720px) {
@@ -211,7 +210,7 @@
           <div class="name">Sean Insler <span class="title">· Senior Product Manager</span></div>
           <nav class="nav">
             <a href="#approach">Approach</a>
-            <a href="#work">Work</a>
+            <a href="#case-studies">Case Studies</a>
             <a href="#contact">Contact</a>
           </nav>
         </header>
@@ -224,72 +223,69 @@
 
         <div class="cta-row">
           <a class="btn" href="mailto:sean.insler@gmail.com">Email</a>
-          <a class="btn" href="https://www.linkedin.com/in/seaninsler/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a class="btn" href="./SEAN-INSLER-web-cv.pdf" target="_blank" rel="noopener noreferrer">Resume (PDF)</a>
+          <a class="btn" href="https://www.linkedin.com/in/seaninsler/" target="_blank">LinkedIn</a>
+          <a class="btn" href="./SEAN-INSLER-web-cv.pdf" target="_blank">Resume (PDF)</a>
         </div>
       </div>
     </section>
 
     <main class="wrap">
+
+      <!-- How I Work (UNCHANGED) -->
       <section id="approach">
         <h2>How I Work</h2>
         <ul class="grid-list">
           <li><strong>0→1 Product Delivery:</strong> I ship new products in resource-constrained environments, from problem framing to launch.</li>
           <li><strong>Systems Thinking:</strong> I look for the underlying mechanics—data, workflows, governance, integrations—so products hold up under real usage.</li>
           <li><strong>Stakeholder Translation:</strong> I reconcile conflicting priorities and turn ambiguity into clear decisions teams can execute.</li>
-          <li><strong>Risk & Compliance Awareness:</strong> I build with operational constraints in mind (policy, governance, auditability, and reliability).</li>
-          <li><strong>Pragmatic Strategy:</strong> I define roadmaps that match reality—constraints, adoption, and what can actually ship.</li>
-          <li><strong>AI-Enabled Execution:</strong> I use AI to speed up synthesis, spec writing, and backlog refinement—without outsourcing judgment.</li>
+          <li><strong>Risk & Compliance Awareness:</strong> I build with operational constraints in mind.</li>
+          <li><strong>Pragmatic Strategy:</strong> I define roadmaps that match reality.</li>
+          <li><strong>AI-Enabled Execution:</strong> I use AI to speed synthesis and refinement—without outsourcing judgment.</li>
         </ul>
       </section>
 
       <div class="rule"></div>
 
-      <section id="work">
-        <h2>Selected Work</h2>
+
+      <!-- NEW: Case Studies Section -->
+      <section id="case-studies">
+        <h2>Case Studies</h2>
+        <p class="lede" style="margin-bottom: 20px;">
+          Deeper breakdowns of product leadership under constraint.
+        </p>
 
         <div class="work-item">
-          <div class="work-title">Advertease — Services-Led Platform Delivery (Pre-PMF)</div>
+          <div class="work-title">Enterprise Marketplace & Recommendation Engine</div>
           <p class="work-desc">
-            Led product strategy and hands-on delivery for a services-led hospitality tech startup. Shipped production software across
-            30–35 live venue locations, including venue websites, POS-to-web integrations, membership experiences, and a creator content platform.
-            Balanced custom client delivery with reusable platform foundations while operating under runway, compliance, and shifting commercial constraints.
+            Secured enterprise funding and transformed a low-adoption portal into a broker
+            decision-support system embedded in workflow inside a Fortune 500 environment.
           </p>
-          <div class="work-metric">Impact: Deployed core experiences across 30–35 locations and standardized reusable components that improved speed-to-launch for new venues.</div>
+          <a class="case-link" href="./case-study-enterprise-marketplace.html">
+            Read full case study →
+          </a>
         </div>
 
         <div class="work-item">
-          <div class="work-title">Marsh &amp; McLennan — Industry-First Global Marketplace</div>
+          <div class="work-title">De-Risking a Vertical Creator Platform</div>
           <p class="work-desc">
-            Conceptualized and championed an industry-first two-sided global marketplace supporting 170+ global enterprise insurance clients.
-            Secured executive buy-in, owned full product lifecycle from discovery through launch. Partnered with leadership across
-            20+ global markets to translate strategic goals into product requirements.
+            Stabilized and shipped a club-native monetization platform under startup pressure,
+            reducing behavioral activation risk before client beta.
           </p>
-          <div class="work-metric">Impact: Built the largest active internal user base of any application across Marsh &amp; McLennan Companies and supported 70+ North American clients directly.</div>
+          <a class="case-link" href="./case-study-vertical-creator-platform.html">
+            Read full case study →
+          </a>
         </div>
-
-        <div class="work-item">
-          <div class="work-title">Marsh &amp; McLennan — Agile Transformation Pioneer</div>
-          <p class="work-desc">
-            Led the company’s first fully internal application development effort using agile methodology. Navigated global change governance
-            and compliance requirements while maintaining fast-paced cross-functional delivery. Designed improved global data hierarchy
-            for insurance products and contributed to a patent-pending recommendation engine.
-          </p>
-          <div class="work-metric">Impact: Pioneered agile adoption that became the template for future internal development.</div>
-        </div>
-
       </section>
 
       <div class="rule"></div>
 
       <section id="contact">
         <div class="contact-card">
-          <img class="headshot" src="images/headshot.png" alt="Sean Insler" />
           <div>
             <div style="display: flex; gap: 24px; font-weight: 700; flex-wrap: wrap;">
               <a href="mailto:sean.insler@gmail.com">Email</a>
-              <a href="https://www.linkedin.com/in/seaninsler/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-              <a href="./SEAN-INSLER-web-cv.pdf" target="_blank" rel="noopener noreferrer">Resume (PDF)</a>
+              <a href="https://www.linkedin.com/in/seaninsler/" target="_blank">LinkedIn</a>
+              <a href="./SEAN-INSLER-web-cv.pdf" target="_blank">Resume (PDF)</a>
             </div>
             <p style="margin-top: 10px;">
               Based in Hackensack, NJ · Open to remote roles (USA)
