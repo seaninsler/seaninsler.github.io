@@ -11,7 +11,7 @@
     <meta property="og:title" content="Case Study — De-Risking a Vertical Creator Platform" />
     <meta
       property="og:description"
-      content="Structured alpha testing, UX simplification, and product refocus under high stakes."
+      content="Structured alpha testing, behavioral validation, and the decision to cut — shipping under existential startup pressure."
     />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
@@ -144,6 +144,17 @@
         background: #ffffff;
       }
 
+      .callout {
+        border: 1px solid rgba(15, 23, 42, 0.12);
+        border-radius: 14px;
+        padding: 16px;
+        background: var(--accent-bg);
+        color: rgba(15, 23, 42, 0.82);
+        margin-top: 14px;
+      }
+
+      .callout strong { color: rgba(15, 23, 42, 0.92); }
+
       ul {
         margin: 10px 0 0 18px;
         padding: 0;
@@ -176,179 +187,201 @@
             <a href="#challenge">Challenge</a>
             <a href="#approach">Approach</a>
             <a href="#outcome">Outcome</a>
+            <a href="#reflection">Reflection</a>
           </nav>
         </header>
 
-        <h1>De-Risking a Vertical Creator Platform Under Existential Pressure</h1>
+        <h1>The Most Important Decision Was What to Cut</h1>
         <p class="lede">
-          How I refocused and shipped a club-native content monetization platform for a 35-venue operator,
-          using structured alpha testing and UX simplification to reduce marketplace risk.
+          How I identified behavioral failure risk in a 75%-built creator platform, ran a structured
+          alpha to surface it before the client did, and made a scope reduction call that saved the
+          launch — and bought a startup two more years of runway.
         </p>
 
         <div class="meta">
           <div class="pill"><span class="k">Role</span><span class="v">Senior Product Manager</span></div>
           <div class="pill"><span class="k">Team</span><span class="v">4 CS/Ops/QA · Eng Team</span></div>
           <div class="pill"><span class="k">Client</span><span class="v">35-Venue Operator</span></div>
-          <div class="pill"><span class="k">Goal</span><span class="v">Ship or Fold</span></div>
+          <div class="pill"><span class="k">Outcome</span><span class="v">Delivered · Company Stabilized</span></div>
         </div>
       </div>
     </section>
 
-<main class="wrap">
+    <main class="wrap">
 
-  <section id="context">
-    <h2>Context</h2>
-    <div class="card">
-      <p>
-        Advertease was attempting to pivot from marketing services into a product-led SaaS company.
-        The cornerstone of that pivot was a verticalized content monetization platform designed for nightclub
-        performers and venue operators.
-      </p>
+      <section id="context">
+        <h2>Context</h2>
+        <div class="card">
+          <p>
+            Advertease was pivoting from a marketing services agency into a product-led SaaS company.
+            The cornerstone of that pivot was a verticalized content monetization platform — a club-native
+            alternative to OnlyFans designed for nightclub performers, DJs, staff, and venue operators
+            within a unified ecosystem.
+          </p>
 
-      <p>
-        A 35-location venue operator was waiting for delivery. If we failed to ship something viable,
-        the company’s runway was in serious jeopardy.
-      </p>
+          <p>
+            A 35-location venue operator was the anchor client. Their sign-off was the condition for
+            continued funding. If we failed to ship something viable, the company's runway was gone.
+          </p>
 
-      <p>
-        The platform was roughly 75% built when I joined. Features existed. Payments technically worked.
-        But the system did not behave coherently. Navigation was fragmented, content types were duplicative,
-        and creator workflows were overloaded with choices.
-      </p>
+          <p>
+            When I joined, the platform was roughly 75% built. Features existed. Payments technically
+            worked. But it did not behave coherently. Navigation was fragmented, content types were
+            duplicative, and creator workflows were overloaded with branching choices at every step.
+          </p>
 
-      <p>
-        The risk was not technical failure. The risk was behavioral failure.
-      </p>
-    </div>
-  </section>
+          <div class="callout">
+            <strong>The real risk was not technical.</strong> A product can pass QA and still fail in the market.
+            The risk was that creators would encounter too much friction to activate — and the marketplace
+            would launch structurally hollow.
+          </div>
+        </div>
+      </section>
 
-  <div class="rule"></div>
+      <div class="rule"></div>
 
-  <section id="challenge">
-    <h2>The Core Problem</h2>
-    <div class="card">
-      <p>
-        Leadership knew what the product was meant to be: a club-native alternative to OnlyFans,
-        adult-friendly but not exclusively pornographic, capable of supporting performers, DJs,
-        staff, and venues within a unified ecosystem.
-      </p>
+      <section id="challenge">
+        <h2>The Core Problem</h2>
+        <div class="card">
+          <p>
+            Leadership had a clear vision for what the product should be. What nobody had validated
+            was whether creators would actually use it — consistently enough to build a fan-side value
+            proposition worth paying for.
+          </p>
 
-      <p>
-        What we did not know was whether creators would actually use it in a sustained way.
-      </p>
+          <p>
+            The behavioral unknowns were significant:
+          </p>
 
-      <ul>
-        <li>Would creators complete onboarding and meaningfully build profiles?</li>
-        <li>Would they seed enough content to create fan value?</li>
-        <li>Would the complexity discourage less experienced creators?</li>
-        <li>Would overlapping content types fragment both publishing and discovery?</li>
-      </ul>
+          <ul>
+            <li>Would creators complete onboarding and meaningfully build out profiles?</li>
+            <li>Would they publish enough content to create real fan value before launch?</li>
+            <li>Were the overlapping content types causing confusion, or just surface-level noise?</li>
+            <li>Would less-experienced creators drop out at the points where the system required judgment?</li>
+          </ul>
 
-      <p>
-        Shipping without answering those questions would have satisfied a delivery milestone
-        while leaving the marketplace structurally weak.
-      </p>
-    </div>
-  </section>
+          <p>
+            Shipping without answering those questions would have hit a delivery milestone while leaving
+            the marketplace structurally weak — and the client would have discovered the flaw themselves.
+          </p>
+        </div>
+      </section>
 
-  <div class="rule"></div>
+      <div class="rule"></div>
 
-  <section id="approach">
-    <h2>Intervention</h2>
-    <div class="card">
+      <section id="approach">
+        <h2>Approach</h2>
+        <div class="card">
 
-      <h3>1. Reframing Beta as Risk Management</h3>
-      <p>
-        The client required a beta before sign-off. I proposed running an internal alpha first,
-        not as a feature test, but as a structured behavioral stress test.
-      </p>
+          <h3>1. Inserting an Alpha Before the Required Beta</h3>
+          <p>
+            The contract required a client beta before sign-off. I proposed running an internal alpha
+            first — not as a feature validation exercise, but as a structured behavioral stress test.
+          </p>
+          <p>
+            The goal was to expose creator friction before the client's staff encountered it,
+            and to use real test content to seed the environment the client would eventually evaluate.
+            It also gave us a defensible record of how we'd identified and addressed risk proactively.
+          </p>
 
-      <p>
-        The goal was to expose creator friction before the client’s staff encountered it —
-        and to use real test content to seed the eventual beta environment.
-      </p>
+          <h3>2. Deliberately Removing Guidance Over Time</h3>
+          <p>
+            I organized approximately 20 creators into cohorts, each led by one of four internal team
+            members. We started with detailed facilitation scripts, required written feedback reports
+            after each session, and held recurring debrief calls.
+          </p>
+          <p>
+            As the alpha progressed, we intentionally reduced the specificity of our instructions — measuring
+            whether workflows were becoming genuinely intuitive or whether creators were still dependent
+            on guidance to navigate the system. This distinction matters: a product that works with
+            hand-holding is not the same as a product that works.
+          </p>
 
-      <h3>2. Structured Real-World Validation</h3>
-      <p>
-        I organized ~20 creators into structured testing cohorts led by four internal team members.
-        We created detailed scripts, required written reports, and held recurring feedback sessions.
-      </p>
+          <h3>3. Making the Call to Collapse Content Types</h3>
+          <p>
+            The alpha surfaced a consistent pattern: too many content types created publishing confusion
+            and fragmented fan discovery. Creators hesitated at format selection. Fans had no coherent
+            feed to anchor to.
+          </p>
+          <p>
+            I made the decision to consolidate all media formats into a unified "Post" model — a single
+            content surface capable of supporting video, image, text, and polls.
+          </p>
+          <ul>
+            <li>Eliminated the decision overhead creators faced when publishing</li>
+            <li>Unified fan discovery into a single, scrollable feed</li>
+            <li>Created a foundation for future search and recommendation logic</li>
+            <li>Reduced long-term technical surface area and maintenance burden</li>
+          </ul>
 
-      <p>
-        As testing progressed, we intentionally reduced instructional specificity to measure
-        whether workflows were becoming intuitive rather than dependent on guidance.
-      </p>
+          <h3>4. Optimizing for Activation, Not Feature Parity</h3>
+          <p>
+            Beyond content type consolidation, we stripped unnecessary branching from profile
+            completion and publishing flows. The aim was zero ambiguity at each step — not
+            maximum flexibility.
+          </p>
+          <p>
+            One finding that stood out: experienced and novice creators converged toward nearly
+            identical behavior once friction was reduced. The bottleneck was never sophistication.
+            It was system complexity getting in the way of both groups equally.
+          </p>
 
-      <h3>3. Collapsing Product Complexity</h3>
-      <p>
-        The alpha surfaced a consistent pattern: too many content types created confusion
-        and duplicated surfaces for both creators and fans.
-      </p>
+        </div>
+      </section>
 
-      <p>
-        I made the decision to collapse all media formats into a unified “Post” model capable of
-        supporting video, image, text, and polls.
-      </p>
+      <div class="rule"></div>
 
-      <ul>
-        <li>Reduced creator cognitive load</li>
-        <li>Unified fan discovery into a single feed</li>
-        <li>Enabled future search and recommendation logic</li>
-        <li>Reduced long-term technical surface area</li>
-      </ul>
+      <section id="outcome">
+        <h2>Outcome</h2>
+        <div class="card">
+          <p>
+            The client formally accepted the delivered platform. The company stabilized and continued
+            operating for two additional years — iterating on the product and pursuing new clients.
+          </p>
 
-      <h3>4. Designing for Activation, Not Feature Parity</h3>
-      <p>
-        We streamlined profile completion and publishing flows,
-        removing unnecessary branching and limiting choice overload.
-      </p>
+          <p>
+            The anchor client ultimately chose not to launch publicly, disengaging after delivery.
+            That was a distribution risk we had knowingly accepted: their sign-off was the condition
+            for survival, not a guarantee of launch. The decision to ship to an uncertain client was
+            made deliberately, with full understanding of the tradeoff.
+          </p>
 
-      <p>
-        Interestingly, experienced and novice creators converged toward similar behavior
-        once friction was reduced. The constraint was not sophistication — it was system complexity.
-      </p>
+          <div class="callout">
+            <strong>What the delivery actually proved:</strong> that a behaviorally coherent creator
+            marketplace could be shipped under extreme constraint — on a compressed timeline,
+            with an inherited codebase, and with no guarantee the client would take it live.
+            The product passed the test it needed to pass.
+          </div>
+        </div>
+      </section>
 
-    </div>
-  </section>
+      <div class="rule"></div>
 
-  <div class="rule"></div>
+      <section id="reflection">
+        <h2>What This Taught Me</h2>
+        <div class="card">
+          <p>
+            In vertical marketplaces, product risk hides in behavior — not infrastructure.
+            Payments can work. Features can pass QA. But if the workflow requires too much cognitive
+            effort at any point in the activation sequence, the marketplace doesn't fill.
+          </p>
 
-  <section id="outcome">
-    <h2>Outcome</h2>
-    <div class="card">
-      <p>
-        The client formally accepted the delivered platform.
-      </p>
+          <p>
+            Simplification is not a cosmetic decision. Collapsing the content model changed the
+            structural logic of how creators published and how fans discovered content. It was an
+            architectural choice dressed up as a UX improvement.
+          </p>
 
-      <p>
-        The company stabilized and continued operating for an additional two years,
-        iterating on the product and pursuing additional clients.
-      </p>
+          <p>
+            The most important move I made on this project was not building something — it was
+            running a test designed to tell me what to remove before anyone else found out it was wrong.
+            Under existential pressure, the highest-leverage PM decision is often diagnostic,
+            not additive.
+          </p>
+        </div>
+      </section>
 
-      <p>
-        The client ultimately chose not to launch publicly and disengaged after delivery —
-        a distribution risk we knowingly accepted in exchange for survival.
-      </p>
-
-      <h3>What This Project Taught Me</h3>
-      <p>
-        In vertical marketplaces, product risk often hides in behavior, not infrastructure.
-        Payments can work. Features can exist. But if workflows require too much cognitive effort,
-        activation collapses.
-      </p>
-
-      <p>
-        Simplification is not cosmetic. It is structural.
-      </p>
-
-      <p>
-        This project reinforced that under existential pressure, the most senior product decision
-        is often deciding what to remove — and validating that decision before the client discovers the flaw.
-      </p>
-    </div>
-  </section>
-
-</main>
+    </main>
 
     <footer class="footer">
       <div>© <span id="year"></span> Sean Insler</div>
