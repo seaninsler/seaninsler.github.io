@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PRD Generator — Sean Insler</title>
+    <meta
+      name="description"
+      content="A working product tool built on the Anthropic API. Describe a product and a problem; Claude drafts a structured PRD."
+    />
+    <meta property="og:title" content="PRD Generator — Sean Insler" />
+    <meta property="og:description" content="An AI-native PM tool: from a paragraph to a structured PRD." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+
+    <style>
+      :root {
+        --text: #0f172a;
+        --muted: rgba(15, 23, 42, 0.7);
+        --rule: rgba(15, 23, 42, 0.12);
+        --link: #1f4cff;
+        --maxw: 850px;
+        --accent-bg: #f8fafc;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Helvetica, Arial, sans-serif;
+        color: var(--text);
+        background: #fff;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: var(--link); text-decoration: none; }
+      a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+      .hero {
+        position: relative;
+        background-image: url("images/banner.png");
+        background-size: cover;
+        background-position: center;
+        padding: 64px 24px;
+        border-bottom: 1px solid var(--rule);
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 45%, rgba(255,255,255,0.84) 100%);
+      }
+      .hero-inner { position: relative; max-width: var(--maxw); margin: 0 auto; }
+      header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 12px; }
+      .name { font-weight: 800; font-size: 18px; }
+      .title { font-weight: 600; color: var(--muted); }
+      .nav { display: flex; gap: 14px; font-weight: 600; flex-wrap: wrap; }
+
+      h1, h2, h3 { line-height: 1.15; margin: 0 0 14px; letter-spacing: -0.02em; }
+      h1 { font-size: clamp(30px, 4vw, 44px); }
+      h2 { font-size: 22px; }
+      h3 { font-size: 16px; margin: 0 0 8px; letter-spacing: -0.01em; }
+      p { margin: 0 0 14px; color: var(--muted); }
+      .lede { font-size: 1.07rem; color: rgba(15,23,42,0.78); max-width: 70ch; }
+
+      .wrap { max-width: var(--maxw); margin: 0 auto; padding: 40px 24px 64px; }
+      .rule { height: 1px; background: var(--rule); margin: 34px 0; }
+
+      .meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 18px; }
+      .pill { border: 1px solid rgba(15,23,42,0.12); border-radius: 14px; padding: 10px 12px; background: rgba(255,255,255,0.75); }
+      .pill .k { display: block; font-size: 12px; color: var(--muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; }
+      .pill .v { display: block; margin-top: 3px; font-weight: 800; color: rgba(15,23,42,0.9); }
+
+      .card { border: 1px solid var(--rule); border-radius: 14px; padding: 18px; background: #fff; }
+      .card + .card { margin-top: 14px; }
+      ul { margin: 10px 0 0 18px; padding: 0; }
+      li { margin: 6px 0; color: rgba(15,23,42,0.82); }
+
+      label { display: block; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin: 0 0 6px; }
+      .opt { font-weight: 600; text-transform: none; }
+      input, textarea {
+        width: 100%; border: 1px solid var(--rule); border-radius: 10px; padding: 10px 12px;
+        font: inherit; font-size: 14px; color: var(--text); background: #fff; outline: none;
+      }
+      input:focus, textarea:focus { border-color: var(--link); }
+      textarea { min-height: 84px; resize: vertical; }
+      .field { margin-bottom: 14px; }
+      .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+      .btn {
+        border: none; background: var(--link); color: #fff; border-radius: 10px;
+        padding: 11px 22px; font-size: 14px; font-weight: 800; cursor: pointer;
+      }
+      .btn:disabled { background: rgba(31,76,255,0.5); cursor: default; }
+      .btn.ghost { background: #fff; color: var(--text); border: 1px solid var(--rule); padding: 8px 16px; font-size: 13px; }
+      .toggle { display: inline-flex; gap: 8px; }
+      .seg { border: 1px solid var(--rule); background: #fff; color: var(--muted); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 700; cursor: pointer; }
+      .seg.on { border-color: var(--link); background: var(--link); color: #fff; }
+
+      .note { font-size: 13px; color: var(--muted); margin: 10px 0 0; }
+      .err { border: 1px solid rgba(220,38,38,0.4); background: #fef2f2; color: #b91c1c; border-radius: 12px; padding: 14px; margin-top: 14px; }
+      .spinner { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--rule); border-top-color: var(--link); display: inline-block; animation: spin 0.8s linear infinite; vertical-align: -2px; margin-right: 8px; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+
+      .out h3 { color: var(--text); }
+      .out .card { margin-top: 14px; }
+      .out p { color: rgba(15,23,42,0.82); margin: 0; }
+      .docbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 24px 0 4px; flex-wrap: wrap; }
+      .docbar h2 { margin: 0; }
+      .row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+      .footer { border-top: 1px solid var(--rule); padding: 24px; text-align: center; color: var(--muted); font-size: 0.95rem; }
+      @media (max-width: 720px) { .meta, .two { grid-template-columns: 1fr 1fr; } .two { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+
+  <body>
+    <section class="hero">
+      <div class="hero-inner">
+        <header>
+          <div class="name">Sean Insler <span class="title">· Project</span></div>
+          <nav class="nav">
+            <a href="./index.html">Home</a>
+            <a href="#about">About</a>
+            <a href="#tool">Try it</a>
+            <a href="#take">Take it</a>
+          </nav>
+        </header>
+
+        <h1>PRD Generator</h1>
+        <p class="lede">
+          A working product tool built on the Anthropic API. Describe a product and the problem it solves,
+          and Claude drafts a structured PRD the way a PM would: diagnose first, then build the spec.
+        </p>
+
+        <div class="meta">
+          <div class="pill"><span class="k">Built with</span><span class="v">Claude (Sonnet 4.6)</span></div>
+          <div class="pill"><span class="k">Stack</span><span class="v">Vanilla JS + API</span></div>
+          <div class="pill"><span class="k">Auth</span><span class="v">Bring your own key</span></div>
+          <div class="pill"><span class="k">Source</span><span class="v">Open · take it below</span></div>
+        </div>
+      </div>
+    </section>
+
+    <main class="wrap">
+      <section id="about">
+        <h2>What this is</h2>
+        <div class="card">
+          <p>
+            Most PRDs start with a blank page and a vague mandate. This tool removes the blank page. You give it
+            the product and the problem, and it returns a first draft with the sections a real PRD needs: problem
+            framing, goals and non-goals, users, functional requirements, success metrics, risks, open questions,
+            and milestones.
+          </p>
+          <p style="margin-bottom:0;">
+            It drafts in two passes on purpose. The first pass diagnoses and frames the problem. The second pass
+            structures the build. That mirrors how I work through ambiguous product problems: intake, diagnose,
+            synthesize, structure, ship. It produces a strong starting draft. You still own the decisions.
+          </p>
+        </div>
+        <div class="card">
+          <h3>How it works</h3>
+          <p>
+            The front end is plain HTML and JavaScript, no framework and no build step. It calls the Anthropic API
+            directly and runs generation as two sequential calls, so each set of sections comes back as clean,
+            structured JSON and renders into the document.
+          </p>
+          <p style="margin-bottom:0;">
+            Auth is bring-your-own-key. Your API key stays in your browser for the session, goes straight to
+            Anthropic, and is never stored, logged, or sent anywhere else. Direct browser calls are fine for a
+            personal demo like this. A production version would route through a small server so no key is ever exposed.
+          </p>
+        </div>
+      </section>
+
+      <div class="rule"></div>
+
+      <section id="tool">
+        <h2>Try it</h2>
+        <div class="card">
+          <div class="field">
+            <label for="key">Anthropic API key <span class="opt">(stays in your browser)</span></label>
+            <input id="key" type="password" placeholder="sk-ant-..." autocomplete="off" />
+            <p class="note">Get a key at console.anthropic.com. It is used only to call Anthropic directly from this page.</p>
+          </div>
+          <div class="field">
+            <label for="pname">Product or feature</label>
+            <input id="pname" placeholder="e.g. Broker insurer-match recommendations" />
+          </div>
+          <div class="field">
+            <label for="pproblem">The problem or opportunity</label>
+            <textarea id="pproblem" placeholder="What is broken today, who it hurts, and why it is worth solving now."></textarea>
+          </div>
+          <div class="two">
+            <div class="field">
+              <label for="pusers">Target users <span class="opt">(optional)</span></label>
+              <input id="pusers" placeholder="e.g. commercial brokers" />
+            </div>
+            <div class="field">
+              <label for="pconstraints">Constraints <span class="opt">(optional)</span></label>
+              <input id="pconstraints" placeholder="timeline, tech, regulatory" />
+            </div>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+            <div class="toggle">
+              <button class="seg on" data-alt="strategic" onclick="setAlt('strategic')" title="Exec-facing framing">Strategic</button>
+              <button class="seg" data-alt="detailed" onclick="setAlt('detailed')" title="Eng-facing specifics">Detailed</button>
+            </div>
+            <button id="go" class="btn" onclick="generate()">Draft PRD</button>
+          </div>
+        </div>
+
+        <div id="status"></div>
+        <div id="error"></div>
+
+        <div id="docbar" class="docbar" style="display:none;">
+          <h2 id="docTitle"></h2>
+          <div class="row">
+            <button class="btn ghost" id="copyBtn" onclick="copyMd()">Copy markdown</button>
+            <button class="btn ghost" onclick="downloadMd()">Download .md</button>
+          </div>
+        </div>
+        <div id="out" class="out"></div>
+      </section>
+
+      <div class="rule"></div>
+
+      <section id="take">
+        <h2>Take it</h2>
+        <div class="card">
+          <p>Two ways to run it yourself.</p>
+          <h3>1. In Claude, no key needed</h3>
+          <p>
+            Copy the Claude-ready version, open a new chat at claude.ai, and paste it in. Claude renders it as an
+            artifact and handles the API call, so it runs with no key.
+          </p>
+          <div class="row" style="margin-bottom:8px;">
+            <button class="btn ghost" id="copyApp" onclick="copyApp()">Copy Claude version</button>
+            <button class="btn ghost" onclick="downloadApp()">Download Claude version (.html)</button>
+          </div>
+          <h3 style="margin-top:16px;">2. Standalone, with your own key</h3>
+          <p style="margin-bottom:0;">
+            Download this page and open it anywhere. It works the same, using your own Anthropic key.
+            <span style="display:block; margin-top:8px;">
+              <button class="btn ghost" onclick="downloadSelf()">Download this page (.html)</button>
+            </span>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>© <span id="year"></span> Sean Insler · seaninsler.github.io</div>
+    </footer>
+
+    <!-- Claude-ready (key-free) version, stored as plain text for copy/download -->
+    <textarea id="claudeAppSrc" hidden>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD Generator</title>
+<style>
+  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color:#0f172a; max-width:760px; margin:24px auto; padding:0 16px; line-height:1.6; }
+  h1 { letter-spacing:-0.02em; } h3 { margin:0 0 8px; }
+  label { display:block; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; color:rgba(15,23,42,0.7); margin:0 0 6px; }
+  input, textarea { width:100%; padding:10px 12px; border:1px solid rgba(15,23,42,0.15); border-radius:10px; font:inherit; margin:0 0 14px; box-sizing:border-box; }
+  textarea { min-height:80px; resize:vertical; }
+  button { background:#1F4CFF; color:#fff; border:0; border-radius:10px; padding:11px 22px; font-weight:800; cursor:pointer; }
+  button:disabled { opacity:0.55; cursor:default; }
+  .card { border:1px solid rgba(15,23,42,0.12); border-radius:14px; padding:16px; margin-top:12px; }
+  .card p { margin:0; color:rgba(15,23,42,0.82); }
+  ul { margin:6px 0 0 18px; } li { margin:6px 0; color:rgba(15,23,42,0.82); }
+  #status { margin-top:14px; color:rgba(15,23,42,0.7); }
+</style>
+</head>
+<body>
+<h1>PRD Generator</h1>
+<p>Describe a product and the problem it solves. Claude drafts a structured PRD. Runs inside Claude with no API key.</p>
+<label for="pname">Product or feature</label>
+<input id="pname" placeholder="e.g. Broker insurer-match recommendations" />
+<label for="pproblem">The problem or opportunity</label>
+<textarea id="pproblem" placeholder="What is broken today and why it matters."></textarea>
+<label for="pusers">Target users (optional)</label>
+<input id="pusers" placeholder="e.g. commercial brokers" />
+<button id="go" onclick="run()">Draft PRD</button>
+<div id="status"></div>
+<div id="out"></div>
+<script>
+async function call(prompt) {
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, messages: [{ role: "user", content: prompt }] })
+  });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message || "API error");
+  let t = (data.content || []).filter(b => b.type === "text").map(b => b.text).join("").trim();
+  t = t.replace(/```json/gi, "").replace(/```/g, "").trim();
+  const s = t.indexOf("{"), e = t.lastIndexOf("}");
+  if (s > -1 && e > -1) t = t.slice(s, e + 1);
+  t = t.replace(/,(\s*[}\]])/g, "$1");
+  return JSON.parse(t);
+}
+function ctx(i) { return "Product: " + i.name + "\nProblem: " + i.problem + "\nUsers: " + (i.users || "infer reasonable personas"); }
+function p1(i) { return 'You are a senior product manager. Be concrete and specific. Return ONLY valid JSON, no markdown: {"tldr":"2-3 sentences","problem":"one paragraph","goals":["3-5"],"nonGoals":["2-4"],"users":[{"persona":"","need":""}]}\n' + ctx(i); }
+function p2(i) { return 'You are a senior product manager. Return ONLY valid JSON, no markdown. Keep values to one short sentence: {"requirements":[{"title":"","detail":""}],"metrics":["3-4"],"risks":[{"risk":"","mitigation":""}],"openQuestions":["2-3"],"milestones":[{"phase":"","detail":""}]}\nGive 4-6 requirements, 2-3 risks, 3 milestones.\n' + ctx(i); }
+function get(id) { return document.getElementById(id); }
+function sec(t, html) { get("out").insertAdjacentHTML("beforeend", '<div class="card"><h3>' + t + '</h3>' + html + '</div>'); }
+function esc(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function ul(a, f) { return "<ul>" + a.map(x => "<li>" + (f ? f(x) : esc(x)) + "</li>").join("") + "</ul>"; }
+function render(o) {
+  if (o.tldr) sec("TL;DR", "<p>" + esc(o.tldr) + "</p>");
+  if (o.problem) sec("Problem & Context", "<p>" + esc(o.problem) + "</p>");
+  if (o.goals) sec("Goals", ul(o.goals));
+  if (o.nonGoals) sec("Non-Goals", ul(o.nonGoals));
+  if (o.users) sec("Users & Use Cases", ul(o.users, u => "<b>" + esc(u.persona) + "</b> — " + esc(u.need)));
+  if (o.requirements) sec("Functional Requirements", ul(o.requirements, r => "<b>" + esc(r.title) + "</b> — " + esc(r.detail)));
+  if (o.metrics) sec("Success Metrics", ul(o.metrics));
+  if (o.risks) sec("Risks & Mitigations", ul(o.risks, r => "<b>" + esc(r.risk) + "</b> → " + esc(r.mitigation)));
+  if (o.openQuestions) sec("Open Questions", ul(o.openQuestions));
+  if (o.milestones) sec("Milestones", ul(o.milestones, m => "<b>" + esc(m.phase) + "</b> — " + esc(m.detail)));
+}
+async function run() {
+  const i = { name: get("pname").value.trim(), problem: get("pproblem").value.trim(), users: get("pusers").value.trim() };
+  if (!i.name || !i.problem) { get("status").textContent = "Add a product and a problem first."; return; }
+  get("go").disabled = true; get("status").textContent = "Diagnosing the problem…"; get("out").innerHTML = "";
+  let got1 = false;
+  try {
+    const a = await call(p1(i)); render(a); got1 = true;
+    get("status").textContent = "Structuring requirements…";
+    const b = await call(p2(i)); render(b);
+    get("status").textContent = "";
+  } catch (err) {
+    get("status").textContent = got1 ? "Second half failed. Run again to redraft it." : "Draft failed. Try again. (" + err.message + ")";
+  } finally { get("go").disabled = false; }
+}
+</script>
+</body>
+</html>
+    </textarea>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      var ALT = "strategic";
+      var P1 = null, P2 = null;
+
+      function setAlt(a) {
+        ALT = a;
+        document.querySelectorAll(".seg").forEach(function (b) {
+          b.classList.toggle("on", b.getAttribute("data-alt") === a);
+        });
+      }
+      function get(id) { return document.getElementById(id); }
+      function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+      async function callClaude(prompt, key) {
+        var res = await fetch("https://api.anthropic.com/v1/messages", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": key,
+            "anthropic-version": "2023-06-01",
+            "anthropic-dangerous-direct-browser-access": "true"
+          },
+          body: JSON.stringify({
+            model: "claude-sonnet-4-6",
+            max_tokens: 1500,
+            messages: [{ role: "user", content: prompt }]
+          })
+        });
+        var data = await res.json();
+        if (data.error) throw new Error(data.error.message || "API error");
+        var t = (data.content || []).filter(function (b) { return b.type === "text"; })
+          .map(function (b) { return b.text; }).join("").trim();
+        if (!t) throw new Error("Empty response");
+        t = t.replace(/```json/gi, "").replace(/```/g, "").trim();
+        var s = t.indexOf("{"), e = t.lastIndexOf("}");
+        if (s > -1 && e > -1) t = t.slice(s, e + 1);
+        t = t.replace(/,(\s*[}\]])/g, "$1");
+        try { return JSON.parse(t); }
+        catch (err) { console.error("PRD: JSON parse failed. Raw text:\n", t); throw new Error("Could not parse the model's JSON"); }
+      }
+
+      function ctx(i) {
+        return "Product/feature: " + i.name +
+          "\nProblem or opportunity: " + i.problem +
+          "\nTarget users: " + (i.users || "not specified — infer reasonable personas") +
+          "\nConstraints: " + (i.constraints || "none specified") +
+          "\nAltitude: " + (ALT === "strategic"
+            ? "executive-facing — emphasize why-now, outcomes, positioning"
+            : "engineering-facing — emphasize concrete, testable requirements");
+      }
+      function prompt1(i) {
+        return 'You are a senior product manager drafting a real PRD. Be concrete and specific to the inputs, no filler or generic SaaS boilerplate. Return ONLY valid JSON, no markdown, no backticks, no preamble. Shape: {"tldr":"2-3 sentence summary","problem":"one tight paragraph","goals":["3-5 measurable goals"],"nonGoals":["2-4 explicit non-goals"],"users":[{"persona":"short label","need":"one sentence"}]}\n\n' + ctx(i);
+      }
+      function prompt2(i) {
+        return 'You are a senior product manager drafting a real PRD. Return ONLY valid JSON, no markdown, no backticks, no preamble. Keep every value to one short sentence. Shape: {"requirements":[{"title":"short","detail":"one sentence, testable"}],"metrics":["3-4 metrics with a direction or target"],"risks":[{"risk":"short","mitigation":"one sentence"}],"openQuestions":["2-3 real unknowns"],"milestones":[{"phase":"e.g. Alpha","detail":"what ships and what it proves"}]}\nGive 4-6 requirements, 2-3 risks, 3 milestones.\n\n' + ctx(i);
+      }
+
+      function ul(a, f) { return "<ul>" + a.map(function (x) { return "<li>" + (f ? f(x) : esc(x)) + "</li>"; }).join("") + "</ul>"; }
+      function sec(title, html) { get("out").insertAdjacentHTML("beforeend", '<div class="card"><h3>' + title + "</h3>" + html + "</div>"); }
+      function renderP1(o) {
+        if (o.tldr) sec("TL;DR", "<p>" + esc(o.tldr) + "</p>");
+        if (o.problem) sec("Problem &amp; Context", "<p>" + esc(o.problem) + "</p>");
+        if (o.goals && o.goals.length) sec("Goals", ul(o.goals));
+        if (o.nonGoals && o.nonGoals.length) sec("Non-Goals", ul(o.nonGoals));
+        if (o.users && o.users.length) sec("Users &amp; Use Cases", ul(o.users, function (u) { return "<b>" + esc(u.persona) + "</b> — " + esc(u.need); }));
+      }
+      function renderP2(o) {
+        if (o.requirements && o.requirements.length) sec("Functional Requirements", ul(o.requirements, function (r) { return "<b>" + esc(r.title) + "</b> — " + esc(r.detail); }));
+        if (o.metrics && o.metrics.length) sec("Success Metrics", ul(o.metrics));
+        if (o.risks && o.risks.length) sec("Risks &amp; Mitigations", ul(o.risks, function (r) { return "<b>" + esc(r.risk) + "</b> → " + esc(r.mitigation); }));
+        if (o.openQuestions && o.openQuestions.length) sec("Open Questions", ul(o.openQuestions));
+        if (o.milestones && o.milestones.length) sec("Milestones", ul(o.milestones, function (m) { return "<b>" + esc(m.phase) + "</b> — " + esc(m.detail); }));
+      }
+
+      function showError(msg) { get("error").innerHTML = '<div class="err">' + esc(msg) + "</div>"; }
+      function clearError() { get("error").innerHTML = ""; }
+      function setStatus(msg) {
+        get("status").innerHTML = msg ? '<div class="card" style="margin-top:14px;color:var(--muted);"><span class="spinner"></span>' + esc(msg) + "…</div>" : "";
+      }
+
+      async function generate() {
+        var key = get("key").value.trim();
+        var i = {
+          name: get("pname").value.trim(),
+          problem: get("pproblem").value.trim(),
+          users: get("pusers").value.trim(),
+          constraints: get("pconstraints").value.trim()
+        };
+        clearError();
+        if (!key) { showError("Add your Anthropic API key to run the live demo."); return; }
+        if (!i.name || !i.problem) { showError("Add a product name and the problem you are solving before drafting."); return; }
+
+        P1 = null; P2 = null;
+        get("out").innerHTML = "";
+        get("docbar").style.display = "none";
+        get("go").disabled = true;
+
+        var got1 = false;
+        try {
+          setStatus("Diagnosing the problem and framing goals");
+          P1 = await callClaude(prompt1(i), key);
+          renderP1(P1); got1 = true;
+          get("docTitle").textContent = i.name;
+          get("docbar").style.display = "flex";
+
+          setStatus("Structuring requirements, metrics, and milestones");
+          P2 = await callClaude(prompt2(i), key);
+          renderP2(P2);
+          setStatus("");
+        } catch (err) {
+          console.error("PRD generation error:", err);
+          setStatus("");
+          showError(got1
+            ? "Got the framing, but the second half did not come back cleanly. Hit Draft PRD again to redraft it."
+            : "The draft did not come back cleanly. Check your key and try again. Details are in the browser console.");
+        } finally {
+          get("go").disabled = false;
+        }
+      }
+
+      function toMarkdown() {
+        var name = get("docTitle").textContent || "Draft";
+        var L = ["# PRD — " + name + "\n"];
+        if (P1) {
+          if (P1.tldr) L.push("**TL;DR.** " + P1.tldr + "\n");
+          if (P1.problem) L.push("## Problem & Context\n" + P1.problem + "\n");
+          if (P1.goals) L.push("## Goals\n" + P1.goals.map(function (g) { return "- " + g; }).join("\n") + "\n");
+          if (P1.nonGoals) L.push("## Non-Goals\n" + P1.nonGoals.map(function (g) { return "- " + g; }).join("\n") + "\n");
+          if (P1.users) L.push("## Users & Use Cases\n" + P1.users.map(function (u) { return "- **" + u.persona + "** — " + u.need; }).join("\n") + "\n");
+        }
+        if (P2) {
+          if (P2.requirements) L.push("## Functional Requirements\n" + P2.requirements.map(function (r) { return "- **" + r.title + "** — " + r.detail; }).join("\n") + "\n");
+          if (P2.metrics) L.push("## Success Metrics\n" + P2.metrics.map(function (m) { return "- " + m; }).join("\n") + "\n");
+          if (P2.risks) L.push("## Risks & Mitigations\n" + P2.risks.map(function (r) { return "- **" + r.risk + "** → " + r.mitigation; }).join("\n") + "\n");
+          if (P2.openQuestions) L.push("## Open Questions\n" + P2.openQuestions.map(function (q) { return "- " + q; }).join("\n") + "\n");
+          if (P2.milestones) L.push("## Milestones\n" + P2.milestones.map(function (m) { return "- **" + m.phase + "** — " + m.detail; }).join("\n") + "\n");
+        }
+        return L.join("\n");
+      }
+
+      function flash(btn, label) { var o = btn.textContent; btn.textContent = label; setTimeout(function () { btn.textContent = o; }, 1600); }
+      function download(text, filename, type) {
+        var blob = new Blob([text], { type: type });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url; a.download = filename; a.click();
+        URL.revokeObjectURL(url);
+      }
+
+      function copyMd() { navigator.clipboard.writeText(toMarkdown()); flash(get("copyBtn"), "Copied"); }
+      function downloadMd() {
+        var name = (get("docTitle").textContent || "draft").replace(/\s+/g, "-").toLowerCase();
+        download(toMarkdown(), "PRD-" + name + ".md", "text/markdown");
+      }
+      function appSource() { return get("claudeAppSrc").value.trim(); }
+      function copyApp() { navigator.clipboard.writeText(appSource()); flash(get("copyApp"), "Copied"); }
+      function downloadApp() { download(appSource(), "prd-generator-claude.html", "text/html"); }
+      function downloadSelf() { download("<!doctype html>\n" + document.documentElement.outerHTML, "prd-generator.html", "text/html"); }
+    </script>
+  </body>
+</html>
