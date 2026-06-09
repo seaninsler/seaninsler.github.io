@@ -253,7 +253,7 @@
     </footer>
 
     <!-- Claude-ready (key-free) version, stored as plain text for copy/download -->
-    <textarea id="claudeAppSrc" hidden>
+    <script type="text/plain" id="claudeAppSrc">
 <!doctype html>
 <html lang="en">
 <head>
@@ -335,10 +335,10 @@ async function run() {
     get("status").textContent = got1 ? "Second half failed. Run again to redraft it." : "Draft failed. Try again. (" + err.message + ")";
   } finally { get("go").disabled = false; }
 }
-</script>
+<\/script>
 </body>
 </html>
-    </textarea>
+    </script>
 
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
@@ -496,7 +496,7 @@ async function run() {
         var name = (get("docTitle").textContent || "draft").replace(/\s+/g, "-").toLowerCase();
         download(toMarkdown(), "PRD-" + name + ".md", "text/markdown");
       }
-      function appSource() { return get("claudeAppSrc").value.trim(); }
+      function appSource() { return get("claudeAppSrc").textContent.replace(/<\\\/script>/g, "<\/script>").trim(); }
       function copyApp() { navigator.clipboard.writeText(appSource()); flash(get("copyApp"), "Copied"); }
       function downloadApp() { download(appSource(), "prd-generator-claude.html", "text/html"); }
       function downloadSelf() { download("<!doctype html>\n" + document.documentElement.outerHTML, "prd-generator.html", "text/html"); }
